@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Login Sederhana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+    }
+    main {
+      padding: 20px;
+    }
+    .login-box, .home-box {
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #388E3C;
+    }
+    .logout-btn {
+      background: #f44336;
+    }
+    .logout-btn:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Sistem Login Sederhana</header>
+
+  <!-- Form Login -->
+  <div class="login-box" id="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Masukkan Username">
+    <input type="password" id="password" placeholder="Masukkan Password">
+    <br>
+    <button onclick="login()">Login</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+
+  <!-- Halaman Utama -->
+  <div class="home-box" id="homeBox" style="display:none;">
+    <h2>Selamat Datang Risman, <span id="userDisplay"></span> 🎉</h2>
+    <p>Ini adalah halaman utama setelah login berhasil.</p>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error");
+
+      if (user === "admin" && pass === "password123") {
+        // Simpan status login
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("username", user);
+        showHome();
+      } else {
+        errorMsg.textContent = "Username atau password salah!";
+      }
+    }
+
+    function showHome() {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("homeBox").style.display = "block";
+      document.getElementById("userDisplay").textContent = localStorage.getItem("username");
+    }
+
+    function logout() {
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("username");
+      document.getElementById("loginBox").style.display = "block";
+      document.getElementById("homeBox").style.display = "none";
+    }
+
+    // Cek apakah user sudah login
+    window.onload = function() {
+      if (localStorage.getItem("isLogin")) {
+        showHome();
+      }
+    }
+  </script>
+
+</body>
+</html>¹
